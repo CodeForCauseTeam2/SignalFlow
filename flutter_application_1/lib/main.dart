@@ -32,14 +32,29 @@ class FirstScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Signal Flow')),
       body: Center(
-        child: ElevatedButton(
-          child: const Text('Sign to Text'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SecondScreen()),
-            );
-          },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SecondScreen()),
+                );
+              },
+              child: const Text('Sign to Text'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ThirdScreen()),
+                );
+              },
+              child: const Text('Text to Sign'),
+            ),
+          ],
         ),
       ),
     );
@@ -52,8 +67,8 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Second Screen')),
-      body: const Center(child: Text('Welcome to Second Screen')),
+      appBar: AppBar(title: const Text('Sign to Text')),
+      body: const Center(child: Text('Start signing to translate sign language to text...')),
     );
   }
 }
@@ -64,8 +79,8 @@ class ThirdScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Third Screen')),
-      body: const Center(child: Text('Welcome to Third Screen')),
+      appBar: AppBar(title: const Text('Text to Sign')),
+      body: const Center(child: Text('Starting typing to translate text to sign language...')),
     );
   }
 }
