@@ -6,6 +6,7 @@ let handLandmarker = null;
 let videoEl = null;
 let running = false;
 let lastVideoTime = -1;
+let sentence = [];
 
 window.mpHandInit = async function mpHandInit() {
   if (handLandmarker) return true;
@@ -99,33 +100,31 @@ function classifyGesture(lm) {
   const tUp = thumbUp(lm);
 
   const upCount = [indexUp, middleUp, ringUp, pinkyUp].filter(Boolean).length;
-
-  // FIST: no fingers up (thumb can vary)
+  
+  // Period: no fingers up (thumb can vary)
   if (upCount === 0 && !indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "FIST";
+    sentence = [];
   }
 
   // OPEN_PALM: all four fingers up
   if (upCount === 4 && tUp) {
-    return "Hello";
+    if (!sentence.includes("Hello")) {
+      sentence.push("Hello");
+    }
   }
 
   // POINT: only index finger up
   if (indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "You";
+    if (!sentence.includes("You")) {
+      sentence.push("You");
+    }
   }
 
   // POINT: only index and middle fingers up
   if (indexUp && middleUp && !ringUp && !pinkyUp) {
-    return "Name";
+    if (!sentence.includes("Name")) {
+      sentence.push("Name");
+    }
   }
-
-  
-
-  // THUMB_UP: thumb up + other fingers down
-  if (tUp && !indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "THUMB_UP";
-  }
-
-  return "UNKNOWN";
+  return sentence.join(" ");
 }
