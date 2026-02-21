@@ -6,6 +6,7 @@ let handLandmarker = null;
 let videoEl = null;
 let running = false;
 let lastVideoTime = -1;
+let sentence = [];
 
 window.mpHandInit = async function mpHandInit() {
   if (handLandmarker) return true;
@@ -90,6 +91,7 @@ function thumbUp(lm) {
   return lm[4].y < lm[3].y;
 }
 
+
 function classifyGesture(lm) {
   const indexUp = fingerUp(lm, 8, 6);
   const middleUp = fingerUp(lm, 12, 10);
@@ -98,54 +100,31 @@ function classifyGesture(lm) {
   const tUp = thumbUp(lm);
 
   const upCount = [indexUp, middleUp, ringUp, pinkyUp].filter(Boolean).length;
-
-  // FIST: no fingers up (thumb can vary)
+  
+  // Period: no fingers up (thumb can vary)
   if (upCount === 0 && !indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "FIST";
+    sentence = [];
   }
 
   // OPEN_PALM: all four fingers up
-  if (upCount === 4) {
-    return "OPEN_PALM";
+  if (upCount === 4 && tUp) {
+    if (!sentence.includes("Hello")) {
+      sentence.push("Hello");
+    }
   }
 
   // POINT: only index finger up
   if (indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "POINT";
+    if (!sentence.includes("You")) {
+      sentence.push("You");
+    }
   }
 
-  // THUMB_UP: thumb up + other fingers down
-  if (tUp && !indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "THUMB_UP";
-  }
-
-
-  //my edits -a.a
-  //PEACE: index + middle up, others down
+  // POINT: only index and middle fingers up
   if (indexUp && middleUp && !ringUp && !pinkyUp) {
-    return "PEACE";
+    if (!sentence.includes("Name")) {
+      sentence.push("Name");
+    }
   }
-
-  // ROCK SIGN (index + pinky)
-  if (indexUp && !middleUp && !ringUp && pinkyUp) {
-    return "ROCK";
-  }
-
-  // OK SIGN (thumb + index touching)
-  if (middleUp && ringUp && pinkyUp && !indexUp && !tUp) {
-    return "OK";
-  }
-
-  // THUMB UP
-  if (tUp && !indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "THUMB_UP";
-  }
-
-  // POINT
-  if (indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "POINT";
-  }
-
-
-  return "UNKNOWN";
+  return sentence.join(" ");
 }
