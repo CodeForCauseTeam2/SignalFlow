@@ -119,5 +119,33 @@ function classifyGesture(lm) {
     return "THUMB_UP";
   }
 
+
+  //my edits -a.a
+  //PEACE: index + middle up, others down
+  if (indexUp && middleUp && !ringUp && !pinkyUp) {
+    return "PEACE";
+  }
+
+  // ROCK SIGN (index + pinky)
+  if (indexUp && !middleUp && !ringUp && pinkyUp) {
+    return "ROCK";
+  }
+
+  // OK SIGN (thumb + index touching)
+  if (middleUp && ringUp && pinkyUp && !indexUp && !tUp) {
+    return "OK";
+  }
+
+  // THUMB UP
+  if (tUp && !indexUp && !middleUp && !ringUp && !pinkyUp) {
+    return "THUMB_UP";
+  }
+
+  // POINT
+  if (indexUp && !middleUp && !ringUp && !pinkyUp) {
+    return "POINT";
+  }
+
+
   return "UNKNOWN";
 }
