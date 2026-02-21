@@ -10,36 +10,49 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Three Screens Demo',
-      initialRoute: '/',
-      routes: {
-        '/': (ctx) => const HomeScreen(),
-        '/second': (ctx) => const SecondScreen(),
-        // '/third': (ctx) => const ThirdScreen(),
-      },
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 33, 103, 243),
+          brightness: Brightness.dark,
+        ),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
+        ),
+      ),
+      home: const FirstScreen(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class FirstScreen extends StatelessWidget {
+  const FirstScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(title: const Text('Signal Flow')),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Home Screen'),
-            const SizedBox(height: 12),
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/second'),
-              child: const Text('Go to Second'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SecondScreen()),
+                );
+              },
+              child: const Text('Sign to Text'),
             ),
+            const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/third'),
-              child: const Text('Go to Third'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ThirdScreen()),
+                );
+              },
+              child: const Text('Text to Sign'),
             ),
           ],
         ),
@@ -50,23 +63,24 @@ class HomeScreen extends StatelessWidget {
 
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Second')),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Second Screen'),
-            const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Back'),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBar(title: const Text('Sign to Text')),
+      body: const Center(child: Text('Start signing to translate sign language to text...')),
+    );
+  }
+}
+
+class ThirdScreen extends StatelessWidget {
+  const ThirdScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Text to Sign')),
+      body: const Center(child: Text('Starting typing to translate text to sign language...')),
     );
   }
 }
