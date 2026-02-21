@@ -70,8 +70,54 @@ window.mpHandDetectOnce = function mpHandDetectOnce() {
 
   if (!results?.landmarks?.length) return null;
 
+  const firstHand = results.landmarks[0];
+  const gesture = classifyGesture(firstHand);
+
   return JSON.stringify({
     landmarks: results.landmarks,
     handedness: results.handednesses,
+    gesture,
   });
 };
+
+function fingerUp(lm, tip, pip) {
+  // y increases downward in image coords
+  return lm[tip].y < lm[pip].y;
+}
+
+// Very rough thumb-up detector: thumb tip is above thumb IP joint
+function thumbUp(lm) {
+  return lm[4].y < lm[3].y;
+}
+
+function classifyGesture(lm) {
+  const indexUp = fingerUp(lm, 8, 6);
+  const middleUp = fingerUp(lm, 12, 10);
+  const ringUp = fingerUp(lm, 16, 14);
+  const pinkyUp = fingerUp(lm, 20, 18);
+  const tUp = thumbUp(lm);
+
+  const upCount = [indexUp, middleUp, ringUp, pinkyUp].filter(Boolean).length;
+
+  // FIST: no fingers up (thumb can vary)
+  if (upCount === 0 && !indexUp && !middleUp && !ringUp && !pinkyUp) {
+    return "FIST";
+  }
+
+  // OPEN_PALM: all four fingers up
+  if (upCount === 4) {
+    return "OPEN_PALM";
+  }
+
+  // POINT: only index finger up
+  if (indexUp && !middleUp && !ringUp && !pinkyUp) {
+    return "POINT";
+  }
+
+  // THUMB_UP: thumb up + other fingers down
+  if (tUp && !indexUp && !middleUp && !ringUp && !pinkyUp) {
+    return "THUMB_UP";
+  }
+
+  return "UNKNOWN";
+}

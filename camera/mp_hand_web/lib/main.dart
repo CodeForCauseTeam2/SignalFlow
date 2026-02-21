@@ -28,6 +28,7 @@ class HandDemo extends StatefulWidget {
 class _HandDemoState extends State<HandDemo> {
   Timer? _timer;
   String _status = 'Idle';
+  String _gesture = "—";
   List<Offset> _points = const [];
 
   Future<void> _start() async {
@@ -42,6 +43,7 @@ class _HandDemoState extends State<HandDemo> {
 
       final decoded = jsonDecode(jsStr.toDart) as Map<String, dynamic>;
       final landmarks = (decoded['landmarks'] as List).first as List; // first hand only
+      final gesture = (decoded['gesture'] as String?) ?? "UNKNOWN";
 
       final pts = <Offset>[];
       for (final lm in landmarks) {
@@ -52,6 +54,7 @@ class _HandDemoState extends State<HandDemo> {
 
       setState(() {
         _points = pts;
+        _gesture = gesture;
         _status = 'Hand detected (${pts.length} points)';
       });
     });
@@ -84,6 +87,14 @@ class _HandDemoState extends State<HandDemo> {
             padding: const EdgeInsets.all(12),
             child: Text(_status),
           ),
+
+          Padding(
+            padding: const EdgeInsets.all(12),
+              child: Text(
+                "Gesture: $_gesture",
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ), 
           Expanded(
             child: LayoutBuilder(
               builder: (context, c) {
