@@ -38,6 +38,20 @@ window.mpHandStart = async function mpHandStart() {
     document.body.appendChild(videoEl);
   }
 
+  if (!window._mpHandCanvas) {
+    const c = document.createElement("canvas");
+    c.style.position = "fixed";
+    c.style.left = "0";
+    c.style.top = "0";
+    c.style.width = "100vw";
+    c.style.height = "100vh";
+    c.style.zIndex = "9999";
+    c.style.pointerEvents = "none";
+    document.body.appendChild(c);
+    window._mpHandCanvas = c;
+    window._mpHandCtx = c.getContext("2d");
+  }
+
   const stream = await navigator.mediaDevices.getUserMedia({ video: true });
   videoEl.srcObject = stream;
 
@@ -68,16 +82,19 @@ window.mpHandDetectOnce = function mpHandDetectOnce() {
   const nowMs = performance.now();
   const results = handLandmarker.detectForVideo(videoEl, nowMs);
 
-  if (!results?.landmarks?.length) return null;
+  const count = results?.landmarks?.length ?? 0;
+  if (!count) return null;
 
-  const firstHand = results.landmarks[0];
-  const gesture = classifyGesture(firstHand);
-
-  return JSON.stringify({
-    landmarks: results.landmarks,
-    handedness: results.handednesses,
-    gesture,
+  const hands = results.landmarks.map((lm, i) => {
+    const handedness = results.handednesses?.[i]?.[0] ?? null;
+    return {
+      landmarks: lm,
+      handedness,                 // { categoryName: "Left"/"Right", score: ... }
+      gesture: classifyGesture(lm) // gesture per hand
+    };
   });
+
+  return JSON.stringify({ hands });
 };
 
 function fingerUp(lm, tip, pip) {
@@ -98,7 +115,7 @@ function classifyGesture(lm) {
   const tUp = thumbUp(lm);
 
   const upCount = [indexUp, middleUp, ringUp, pinkyUp].filter(Boolean).length;
-
+  
   // FIST: no fingers up (thumb can vary)
   if (upCount === 0 && !indexUp && !middleUp && !ringUp && !pinkyUp) {
     return "FIST";
@@ -106,12 +123,12 @@ function classifyGesture(lm) {
 
   // OPEN_PALM: all four fingers up
   if (upCount === 4) {
-    return "OPEN_PALM";
+    return "Hello";
   }
 
   // POINT: only index finger up
   if (indexUp && !middleUp && !ringUp && !pinkyUp) {
-    return "POINT";
+    return "";
   }
 
   // THUMB_UP: thumb up + other fingers down
