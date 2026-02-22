@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-
 void main() {
   runApp(const MainApp());
-  
 }
 
 class MainApp extends StatelessWidget {
@@ -37,29 +35,24 @@ class FirstScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              margin: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: const Text('Welcome to Signal Flow',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SecondScreen()),
+                );
+              },
+              child: const Text('Sign to Text'),
             ),
-            SizedBox(
-              height: 200,
-              width: 500,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SecondScreen()),
-                  );
-                },
-                child: const Text('Tap to start',
-                style: TextStyle(fontSize: 60)),
-              ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ThirdScreen()),
+                );
+              },
+              child: const Text('Text to Sign'),
             ),
           ],
         ),
