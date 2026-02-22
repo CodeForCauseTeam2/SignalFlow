@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 void main() {
   runApp(const MainApp());
   
@@ -46,7 +47,8 @@ class FirstScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const SecondScreen()),
                   );
                 },
-                child: const Text('Sign to Text'),
+                child: const Text('Sign to Text',
+                style: GoogleFonts.Quantico(fontSize: 60),
               ),
             ),
             const SizedBox(height: 16),
@@ -60,7 +62,8 @@ class FirstScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const ThirdScreen()),
                   );
                 },
-                child: const Text('Text to Sign'),
+                child: const Text('Text to Sign',
+                style: TextStyle(fontSize: 60)),
               ),
             ),
           ],
