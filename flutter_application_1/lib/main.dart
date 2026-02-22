@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'hand_demo.dart';
 
 void main() {
   runApp(const MainApp());
@@ -66,10 +67,7 @@ class SecondScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Sign to Text')),
-      body: const Center(child: Text('Start signing to translate sign language to text...')),
-    );
+    return const HandDemo();
   }
 }
 

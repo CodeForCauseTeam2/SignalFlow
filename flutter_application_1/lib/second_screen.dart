@@ -4,6 +4,7 @@
 
 // Minimal stub types so this file can be analyzed/compiled outside a Flutter SDK.
 // These are intentionally tiny and should NOT be used in a real Flutter build.
+import 'hand_demo.dart';
 class Widget {
   const Widget();
 }
@@ -47,8 +48,7 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign to Speech')),
-      body: const Center(child: Text('Translating sign language to text...')),
+      body: HandDemo(),
     );
   }
 }
