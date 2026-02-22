@@ -4,8 +4,52 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class _HandDemoState extends State<HandDemo> {
+  Timer? _timer;
+  String _status = 'Idle';
+  String _gesture = "—";
+  List<Offset> _points = const [];
+
+  Future<void> _start() async {
+    setState(() => _status = 'Initializing…');
+    await mpHandInit().toDart;
+    await mpHandStart().toDart;
+
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(milliseconds: 33), (_) {
+      final jsStr = mpHandDetectOnce();
+      if (jsStr == null) return;
+
+      final decoded = jsonDecode(jsStr.toDart) as Map<String, dynamic>;
+      final landmarks =
+          (decoded['landmarks'] as List).first as List; // first hand only
+      final gesture = (decoded['gesture'] as String?) ?? "UNKNOWN";
+
+      final pts = <Offset>[];
+      for (final lm in landmarks) {
+        final x = (lm['x'] as num).toDouble(); // normalized 0..1
+        final y = (lm['y'] as num).toDouble();
+        pts.add(Offset(x, y));
+      }
+
+      setState(() {
+        _points = pts;
+        _gesture = gesture;
+        _status = 'Hand detected (${pts.length} points)';
+      });
+    });
+
+    setState(() => _status = 'Running');
+  }
+
+  void _stop() {
+    _timer?.cancel();
+    mpHandStop();
+    setState(() {
+      _points = const [];
+      _status = 'Stopped';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,57 +67,42 @@ class MainApp extends StatelessWidget {
 class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
 
+  //use of new tools
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF6A5AE0), Color(0xFF8E7CFF), Color(0xFFB8A8FF)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      appBar: AppBar(title: const Text('MediaPipe Hand Tracking (Web)')),
+      body: Column(
+        children: [
+          Padding(padding: const EdgeInsets.all(12), child: Text(_status)),
+
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text(
+              "Gesture: $_gesture",
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, c) {
+                return CustomPaint(
+                  size: Size(c.maxWidth, c.maxHeight),
+                  painter: _HandPainter(_points),
+                );
+              },
+            ),
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Welcome to\nSignFlow",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 60),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Color(0xFF6A5AE0),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 18,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  elevation: 10,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SecondScreen(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Click Here to Start",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                onPressed: _start,
+                child: const Text('Start webcam'),
               ),
+              const SizedBox(width: 12),
+              ElevatedButton(onPressed: _stop, child: const Text('Stop')),
             ],
           ),
         ),
@@ -159,11 +188,6 @@ class FourthScreen extends StatelessWidget {
   const FourthScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Text to Sign Screen", style: TextStyle(fontSize: 24)),
-      ),
-    );
-  }
+  bool shouldRepaint(covariant _HandPainter oldDelegate) =>
+      oldDelegate.points != points;
 }

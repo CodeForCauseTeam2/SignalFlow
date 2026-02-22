@@ -1,3 +1,4 @@
 {
-  "cmake.sourceDirectory": "C:/CSUN/CodeForACause/SignalFlow/flutter_application_1/windows"
+  "cmake.sourceDirectory": "C:/CSUN/CodeForACause/SignalFlow/flutter_application_1/windows",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

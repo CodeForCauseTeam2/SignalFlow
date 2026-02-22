@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'third_screen.dart';
+import 'second_screen.dart';
+import 'fourth_screen.dart';
 
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
@@ -6,8 +9,58 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign to Speech')),
-      body: const Center(child: Text('Translating sign language to text...')),
+      appBar: AppBar(title: const Text("Menu")),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildMenuButton(
+              context,
+              "Settings",
+              Icons.settings,
+              ThirdScreen(
+                themeMode: ThemeMode.system,
+                onThemeModeChanged: (ThemeMode mode) {},
+              ),
+            ),
+            const SizedBox(height: 20),
+            buildMenuButton(
+              context,
+              "Previous Conversations",
+              Icons.history,
+              FourthScreen(
+                themeMode: ThemeMode.system,
+                onThemeModeChanged: (ThemeMode mode) {},
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildMenuButton(
+    BuildContext context,
+    String text,
+    IconData icon,
+    Widget screen,
+  ) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton.icon(
+        icon: Icon(icon),
+        label: Text(text),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
+        },
+      ),
     );
   }
 }
