@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: const Color.fromARGB(255, 231, 241, 253)),
+      theme: ThemeData(scaffoldBackgroundColor: kAppBackground),
       home: const FirstScreen(),
     );
   }
@@ -27,7 +27,9 @@ class FirstScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Signal Flow')),
-      body: Center(
+      body: Container(
+        color: kAppBackground,
+        child: Center(
           child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
