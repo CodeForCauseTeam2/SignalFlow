@@ -91,6 +91,60 @@ function thumbUp(lm) {
   return lm[4].y < lm[3].y;
 }
 
+function vecSub(a, b) {
+  return { x: a.x - b.x, y: a.y - b.y, z: a.z - b.z };
+}
+
+function cross(a, b) {
+  return {
+    x: a.y * b.z - a.z * b.y,
+    y: a.z * b.x - a.x * b.z,
+    z: a.x * b.y - a.y * b.x,
+  };
+}
+
+function palmNormal(lm) {
+  const wrist = lm[0];
+  const indexMCP = lm[5];
+  const pinkyMCP = lm[17];
+
+  const v1 = vecSub(indexMCP, wrist);
+  const v2 = vecSub(pinkyMCP, wrist);
+
+  return cross(v1, v2);
+}
+
+function fingersTowardCamera(lm) {
+  const wristZ = lm[0].z;
+
+  // fingertips of the thumb(4), index(8), middle(12), ring(16), pinky(20)
+  const tips = [4, 8, 12, 16, 20];
+
+  // negative z is closer to camera.
+  const avgTipZ = tips.reduce((sum, i) => sum + lm[i].z, 0) / tips.length;
+
+  // If tips are noticeably closer than wrist, fingers are toward camera.
+  return avgTipZ < wristZ - 0.02; // tweak 0.02 if needed
+}
+
+function isPalmFacingCamera(lm) {
+  const n = palmNormal(lm);
+
+  // If z component is negative, palm faces camera
+  return n.z < 0;
+}
+
+function palmFacingCeiling(lm) {
+  const n = palmNormal(lm);
+
+  // Screen coords: y increases downward, so "up" (toward ceiling) is negative y.
+  // We want the palm normal to point upward.
+  return n.y < 0;
+}
+
+function isPalmUpFingersToCamera(lm) {
+  return palmFacingCeiling(lm) && fingersTowardCamera(lm);
+}
 
 function classifyGesture(lm) {
   const indexUp = fingerUp(lm, 8, 6);
@@ -124,6 +178,12 @@ function classifyGesture(lm) {
   if (indexUp && middleUp && !ringUp && !pinkyUp) {
     if (!sentence.includes("Name")) {
       sentence.push("Name");
+    }
+  }
+
+  if (isPalmUpFingersToCamera(lm)) {
+    if (!sentence.includes("What")) {
+      sentence.push("What");
     }
   }
   return sentence.join(" ");
