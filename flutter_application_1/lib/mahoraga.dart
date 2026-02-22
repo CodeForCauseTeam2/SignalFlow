@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+//main parent of the app
 void main() {
   runApp(const MainApp());
 }
 
+// root parent (MAIN APP)
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -20,6 +22,7 @@ class MainApp extends StatelessWidget {
           displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
         ),
       ),
+      // triggers the first screen to be the welcome screen
       home: const FirstScreen(),
     );
   }
