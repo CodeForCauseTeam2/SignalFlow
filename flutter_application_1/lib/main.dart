@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'hand_demo.dart';
+import 'package:mp_hand_web/hand_demo.dart';
+import 'hand_demo_2.dart';
 void main() {
   runApp(const MainApp());
 }
@@ -94,6 +95,7 @@ class SecondScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Choose Mode"),
         backgroundColor: const Color(0xFF6A5AE0),
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 12),
         foregroundColor: Colors.white,
       ),
       body: Padding(
@@ -101,7 +103,8 @@ class SecondScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            customButton(context, "Sign to Text", const HandDemo())
+            customButton(context, "Sign to Text Prototype A", const HandDemo()),
+            customButton(context, "Sign to Text Prototype B", const HandDemo2())
           ],
         ),
       ),
