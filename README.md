@@ -3,6 +3,6 @@
 - Emily Morazan
 - Aolany Acosta
 - Jose Flores
-- Keitaro Sho
+- Keitaro Cho
 - Hernan Zapien
 - Kayla Mendoza
