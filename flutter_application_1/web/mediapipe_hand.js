@@ -169,17 +169,38 @@ function classifyGesture(lm) {
     }
   }
 
+  // YES / GOOD: thumb only up (fist with thumb up)
+  if (tUp && !indexUp && !middleUp && !ringUp && !pinkyUp) {
+    if (!sentence.includes("Yes")) {
+      sentence.push("Yes");
+    }
+  }
+
   // POINT: only index finger up
-  if (indexUp && !middleUp && !ringUp && !pinkyUp) {
+  if (indexUp && !middleUp && !ringUp && !pinkyUp && !tUp) {
     if (!sentence.includes("You")) {
       sentence.push("You");
     }
   }
 
-  // POINT: only index and middle fingers up
-  if (indexUp && middleUp && !ringUp && !pinkyUp) {
+  // NO (ASL): index + middle up, thumb down (distinct from Name)
+  if (!tUp && indexUp && middleUp && !ringUp && !pinkyUp) {
+    if (!sentence.includes("No")) {
+      sentence.push("No");
+    }
+  }
+
+  // NAME / PEACE: index + middle up with thumb up
+  if (tUp && indexUp && middleUp && !ringUp && !pinkyUp) {
     if (!sentence.includes("Name")) {
       sentence.push("Name");
+    }
+  }
+
+  // THANK YOU: thumb + pinky only (casual “thanks” / hang loose style)
+  if (tUp && !indexUp && !middleUp && !ringUp && pinkyUp) {
+    if (!sentence.includes("Thank you")) {
+      sentence.push("Thank you");
     }
   }
 
