@@ -80,7 +80,7 @@ class _HandDemoState extends State<HandDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('MediaPipe Hand Tracking (Web)')),
+      appBar: AppBar(title: const Text('Sign To Text')),
       body: Column(
         children: [
           Padding(
@@ -91,7 +91,7 @@ class _HandDemoState extends State<HandDemo> {
           Padding(
             padding: const EdgeInsets.all(12),
               child: Text(
-                "Gesture: $_gesture",
+                "Sentence: $_gesture",
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ), 
