@@ -5,6 +5,7 @@ import 'package:flutter_application_1/hand_demo.dart';
 void main() {
   runApp(const MainApp());
   
+  
 }
 
 class MainApp extends StatelessWidget {
@@ -65,6 +66,30 @@ class FirstScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  const SecondScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Sign to Text')),
+      body: const Center(child: Text('Start signing to translate sign language to text...')),
+    );
+  }
+}
+
+class ThirdScreen extends StatelessWidget {
+  const ThirdScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Text to Sign')),
+      body: const Center(child: Text('Starting typing to translate text to sign language...')),
     );
   }
 }
