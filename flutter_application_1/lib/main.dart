@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'third_screen.dart';
+import 'hand_demo.dart';
 
 void main() {
   runApp(const MainApp());
@@ -105,11 +106,7 @@ class SecondScreen extends StatelessWidget {
           children: [
             customButton(context, "Settings", const ThirdScreen()),
             const SizedBox(height: 20),
-            customButton(
-              context,
-              "Previous Conversations",
-              const FourthScreen(),
-            ),
+            customButton(context, "Sign Conversation", const HandDemo()),
           ],
         ),
       ),
@@ -141,20 +138,6 @@ class SecondScreen extends StatelessWidget {
     );
   }
 }
-
-/// =====================
-/// THIRD SCREEN (Settings page)
-// /// =====================
-// class ThirdScreen extends StatelessWidget {
-//   const ThirdScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//       body: Center(child: Text("Settings", style: TextStyle(fontSize: 24))),
-//     );
-//   }
-// }
 
 /// =====================
 /// FOURTH SCREEN (previous conversations)
