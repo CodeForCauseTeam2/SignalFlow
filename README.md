@@ -7,7 +7,10 @@
 - Hernan Zapien
 - Kayla Mendoza
 
-To run our web browser you MUST be in the flutter_application_1 folder and use the command in the terminal "flutter run -d chrome"
+To run our web browser you MUST:
+- ``cd flutter_application_1``
+- ``flutter pub get``
+- ``flutter run -d chrome``
 
 Tasks:
 
