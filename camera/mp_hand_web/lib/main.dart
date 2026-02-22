@@ -42,7 +42,8 @@ class _HandDemoState extends State<HandDemo> {
       if (jsStr == null) return;
 
       final decoded = jsonDecode(jsStr.toDart) as Map<String, dynamic>;
-      final landmarks = (decoded['landmarks'] as List).first as List; // first hand only
+      final landmarks =
+          (decoded['landmarks'] as List).first as List; // first hand only
       final gesture = (decoded['gesture'] as String?) ?? "UNKNOWN";
 
       final pts = <Offset>[];
@@ -77,24 +78,23 @@ class _HandDemoState extends State<HandDemo> {
     super.dispose();
   }
 
+  //use of new tools
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('MediaPipe Hand Tracking (Web)')),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Text(_status),
-          ),
+          Padding(padding: const EdgeInsets.all(12), child: Text(_status)),
 
           Padding(
             padding: const EdgeInsets.all(12),
-              child: Text(
-                "Gesture: $_gesture",
+            child: Text(
+              "Gesture: $_gesture",
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-          ), 
+          ),
           Expanded(
             child: LayoutBuilder(
               builder: (context, c) {
@@ -108,7 +108,10 @@ class _HandDemoState extends State<HandDemo> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(onPressed: _start, child: const Text('Start webcam')),
+              ElevatedButton(
+                onPressed: _start,
+                child: const Text('Start webcam'),
+              ),
               const SizedBox(width: 12),
               ElevatedButton(onPressed: _stop, child: const Text('Stop')),
             ],
@@ -133,5 +136,6 @@ class _HandPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _HandPainter oldDelegate) => oldDelegate.points != points;
+  bool shouldRepaint(covariant _HandPainter oldDelegate) =>
+      oldDelegate.points != points;
 }

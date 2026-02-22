@@ -183,6 +183,13 @@ function classifyGesture(lm) {
     }
   }
 
+  // I LOVE YOU (ASL): thumb + index + pinky up, middle + ring down
+  if (tUp && indexUp && !middleUp && !ringUp && pinkyUp) {
+    if (!sentence.includes("I love you")) {
+      sentence.push("I love you");
+    }
+  }
+
   if (isPalmUpFingersToCamera(lm)) {
     if (!sentence.includes("What")) {
       sentence.push("What");
