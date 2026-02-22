@@ -6,12 +6,8 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign to Speech')),
-
-      body: Align(
-        alignment: Alignment.bottomCenter, 
-        child: Text('Translating sign language to text'),
-      ),
+      appBar: AppBar(title: const Text('options')),
+      body: const Center(child: Text('Translating sign language to text')),
     );
   }
 }

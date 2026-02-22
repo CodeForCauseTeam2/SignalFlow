@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const Color kAppBackground = Color(0xFFF5F5F5);
+
 
 void main() {
   runApp(const MainApp());
@@ -12,15 +14,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 33, 103, 243),
-          brightness: Brightness.dark,
-        ),
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
-        ),
-      ),
+      theme: ThemeData(scaffoldBackgroundColor: const Color.fromARGB(255, 231, 241, 253)),
       home: const FirstScreen(),
     );
   }
@@ -34,7 +28,7 @@ class FirstScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Signal Flow')),
       body: Center(
-        child: Column(
+          child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
@@ -45,20 +39,24 @@ class FirstScreen extends StatelessWidget {
               ),
               child: const Text('Welcome to Signal Flow',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 44, 44, 44))),
             ),
             SizedBox(
               height: 200,
               width: 500,
-              child: ElevatedButton(
+              child: ElevatedButton(  
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 167, 215, 255),
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const SecondScreen()),
                   );
                 },
+
                 child: const Text('Tap to start',
-                style: TextStyle(fontSize: 60)),
+                style: TextStyle(fontSize: 60, color: Color.fromARGB(255, 26, 26, 26))),
               ),
             ),
           ],
