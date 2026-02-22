@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/hand_demo.dart';
-
-
+import 'hand_demo.dart';
 void main() {
   runApp(const MainApp());
-  
-  
 }
 
 class MainApp extends StatelessWidget {
@@ -14,106 +10,143 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 33, 103, 243),
-          brightness: Brightness.dark,
-        ),
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: true, fontFamily: 'Roboto'),
       home: const FirstScreen(),
     );
   }
 }
 
+/// =====================
+/// FIRST SCREEN (WELCOME)
+/// =====================
 class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Signal Flow')),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              margin: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: const Text('Welcome to Signal Flow',
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF6A5AE0), Color(0xFF8E7CFF), Color(0xFFB8A8FF)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Welcome to\nSignFlow",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(
-              height: 200,
-              width: 500,
-              child: ElevatedButton(
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 60),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Color(0xFF6A5AE0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 18,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 10,
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HandDemo()),
+                    MaterialPageRoute(
+                      builder: (context) => const SecondScreen(),
+                    ),
                   );
                 },
-                child: const Text('Tap to start',
-                style: TextStyle(fontSize: 60)),
+                child: const Text(
+                  "Click Here to Start",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
+/// =====================
+/// SECOND SCREEN (OPTIONS)
+/// =====================
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign to Text')),
-      body: const Center(child: Text('Start signing to translate sign language to text...')),
+      appBar: AppBar(
+        title: const Text("Choose Mode"),
+        backgroundColor: const Color(0xFF6A5AE0),
+        foregroundColor: Colors.white,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            customButton(context, "Sign to Text", const HandDemo())
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget customButton(BuildContext context, String text, Widget screen) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF8E7CFF),
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => screen),
+          );
+        },
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 18, color: Colors.white),
+        ),
+      ),
     );
   }
 }
 
+/// =====================
+/// THIRD SCREEN
+/// =====================
 class ThirdScreen extends StatelessWidget {
   const ThirdScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Text to Sign')),
-      body: const Center(child: Text('Starting typing to translate text to sign language...')),
+    return const Scaffold(
+      body: Center(
+        child: Text("Sign to Text Screen", style: TextStyle(fontSize: 24)),
+      ),
     );
   }
 }
 
-class SecondScreen extends StatelessWidget {
-  const SecondScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Sign to Text')),
-      body: const Center(child: Text('Start signing to translate sign language to text...')),
-    );
-  }
-}
-
-class ThirdScreen extends StatelessWidget {
-  const ThirdScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Text to Sign')),
-      body: const Center(child: Text('Starting typing to translate text to sign language...')),
-    );
-  }
-}
