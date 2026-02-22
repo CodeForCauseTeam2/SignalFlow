@@ -1,28 +1,7 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:js_interop';
 import 'package:flutter/material.dart';
-
-@JS('mpHandInit')
-external JSPromise<JSBoolean> mpHandInit();
-
-@JS('mpHandStart')
-external JSPromise<JSBoolean> mpHandStart();
-
-@JS('mpHandStop')
-external JSBoolean mpHandStop();
-
-@JS('mpHandDetectOnce')
-external JSString? mpHandDetectOnce();
-
+import 'hand_demo.dart';
 void main() {
-  runApp(const MaterialApp(home: HandDemo()));
-}
-
-class HandDemo extends StatefulWidget {
-  const HandDemo({super.key});
-  @override
-  State<HandDemo> createState() => _HandDemoState();
+  runApp(const MainApp());
 }
 
 class _HandDemoState extends State<HandDemo> {
@@ -73,10 +52,20 @@ class _HandDemoState extends State<HandDemo> {
   }
 
   @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: true, fontFamily: 'Roboto'),
+      home: const FirstScreen(),
+    );
   }
+}
+
+/// =====================
+/// FIRST SCREEN (WELCOME)
+/// =====================
+class FirstScreen extends StatelessWidget {
+  const FirstScreen({super.key});
 
   //use of new tools
 
@@ -116,24 +105,87 @@ class _HandDemoState extends State<HandDemo> {
               ElevatedButton(onPressed: _stop, child: const Text('Stop')),
             ],
           ),
-          const SizedBox(height: 16),
-        ],
+        ),
       ),
     );
   }
 }
 
-class _HandPainter extends CustomPainter {
-  final List<Offset> points; // normalized 0..1
-  _HandPainter(this.points);
+/// =====================
+/// SECOND SCREEN (OPTIONS)
+/// =====================
+class SecondScreen extends StatelessWidget {
+  const SecondScreen({super.key});
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final p = Paint();
-    for (final pt in points) {
-      canvas.drawCircle(Offset(pt.dx * size.width, pt.dy * size.height), 4, p);
-    }
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Choose Mode"),
+        backgroundColor: const Color(0xFF6A5AE0),
+        foregroundColor: Colors.white,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            customButton(context, "Sign to Text", const HandDemo()),
+            const SizedBox(height: 20),
+            customButton(context, "Text to Sign", const FourthScreen()),
+          ],
+        ),
+      ),
+    );
   }
+
+  Widget customButton(BuildContext context, String text, Widget screen) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF8E7CFF),
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => screen),
+          );
+        },
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 18, color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+/// =====================
+/// THIRD SCREEN
+/// =====================
+class ThirdScreen extends StatelessWidget {
+  const ThirdScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text("Sign to Text Screen", style: TextStyle(fontSize: 24)),
+      ),
+    );
+  }
+}
+
+/// =====================
+/// FOURTH SCREEN
+/// =====================
+class FourthScreen extends StatelessWidget {
+  const FourthScreen({super.key});
 
   @override
   bool shouldRepaint(covariant _HandPainter oldDelegate) =>
