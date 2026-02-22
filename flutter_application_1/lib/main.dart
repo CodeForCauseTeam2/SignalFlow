@@ -37,9 +37,19 @@ class FirstScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Text('Welcome to Signal Flow',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            ),
             SizedBox(
-              height: 400,
-              width: 600,
+              height: 200,
+              width: 500,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -47,22 +57,7 @@ class FirstScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const SecondScreen()),
                   );
                 },
-                child: const Text('Sign to Text',
-                style: GoogleFonts.Quantico(fontSize: 60),
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 400,
-              width: 600,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ThirdScreen()),
-                  );
-                },
-                child: const Text('Text to Sign',
+                child: const Text('Tap to start',
                 style: TextStyle(fontSize: 60)),
               ),
             ),
