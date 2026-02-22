@@ -3,6 +3,21 @@
 - Emily Morazan
 - Aolany Acosta
 - Jose Flores
-- Keitaro Sho
+- Keitaro Cho
 - Hernan Zapien
 - Kayla Mendoza
+
+Tasks:
+
+Web/Brower Application (Kayla, Hernan,Emily):
+  - 
+
+Video Capture of Hand (Aolany & Keitaro): 
+  - Using MediaPipe, we used their model to capture hands.
+  - The MediaPipe model recognizes when a hand appears on screen and maps 21 point to the hand.
+  - Each of these points on the hand have a and x, y, and z axis (value) that correseponds with them.
+  - The 21 points can then be used to train an AI to understand what hand gestures are being shown to it by using the coordinates.
+
+AI Integration (Jose):
+  - Sending captured gestures through a trained AI model to understand what gesture is being showned.
+  - Used python to access a trained AI model using a CDN (Content Directory Network)
