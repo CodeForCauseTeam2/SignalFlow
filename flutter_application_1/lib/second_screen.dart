@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'third_screen.dart';
-import 'second_screen.dart'; // if you have it
-import 'fourth_screen.dart'; // if you have it
+import 'second_screen.dart';
+import 'fourth_screen.dart';
 
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
@@ -19,14 +19,20 @@ class SecondScreen extends StatelessWidget {
               context,
               "Settings",
               Icons.settings,
-              const ThirdScreen(),
+              ThirdScreen(
+                themeMode: ThemeMode.system,
+                onThemeModeChanged: (ThemeMode mode) {},
+              ),
             ),
             const SizedBox(height: 20),
             buildMenuButton(
               context,
               "Previous Conversations",
               Icons.history,
-              const FourthScreen(),
+              FourthScreen(
+                themeMode: ThemeMode.system,
+                onThemeModeChanged: (ThemeMode mode) {},
+              ),
             ),
           ],
         ),

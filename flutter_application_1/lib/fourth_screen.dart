@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class FourthScreen extends StatelessWidget {
-  const FourthScreen({super.key});
+  const FourthScreen({
+    super.key,
+    required Null Function(ThemeMode mode) onThemeModeChanged,
+    required ThemeMode themeMode,
+  });
 
   @override
   Widget build(BuildContext context) {

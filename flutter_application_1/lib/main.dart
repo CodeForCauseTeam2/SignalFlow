@@ -6,15 +6,56 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+// App brand colors
+const Color _primaryLight = Color(0xFF6A5AE0);
+const Color _primaryDark = Color(0xFF8E7CFF);
+
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  ThemeMode _themeMode = ThemeMode.light;
+
+  static final ThemeData _lightTheme = ThemeData(
+    useMaterial3: true,
+    fontFamily: 'Roboto',
+    colorScheme: ColorScheme.fromSeed(seedColor: _primaryLight, brightness: Brightness.light),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: _primaryLight,
+      foregroundColor: Colors.white,
+    ),
+  );
+
+  static final ThemeData _darkTheme = ThemeData(
+    useMaterial3: true,
+    fontFamily: 'Roboto',
+    colorScheme: ColorScheme.fromSeed(seedColor: _primaryDark, brightness: Brightness.dark),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF1E1E2E),
+      foregroundColor: Colors.white,
+    ),
+    scaffoldBackgroundColor: const Color(0xFF12121A),
+  );
+
+  void _setThemeMode(ThemeMode mode) {
+    setState(() => _themeMode = mode);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true, fontFamily: 'Roboto'),
-      home: const FirstScreen(),
+      theme: _lightTheme,
+      darkTheme: _darkTheme,
+      themeMode: _themeMode,
+      home: FirstScreen(
+        themeMode: _themeMode,
+        onThemeModeChanged: _setThemeMode,
+      ),
     );
   }
 }
@@ -23,7 +64,14 @@ class MainApp extends StatelessWidget {
 /// FIRST SCREEN (Our welcome )
 /// =====================
 class FirstScreen extends StatelessWidget {
-  const FirstScreen({super.key});
+  const FirstScreen({
+    super.key,
+    required this.themeMode,
+    required this.onThemeModeChanged,
+  });
+
+  final ThemeMode themeMode;
+  final ValueChanged<ThemeMode> onThemeModeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +89,7 @@ class FirstScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "Welcome to\nSignFlow", // create teh style below
+                "Welcome to\nSignFlow",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 40,
@@ -54,7 +102,7 @@ class FirstScreen extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  foregroundColor: Color(0xFF6A5AE0),
+                  foregroundColor: const Color(0xFF6A5AE0),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 40,
                     vertical: 18,
@@ -68,7 +116,10 @@ class FirstScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SecondScreen(),
+                      builder: (context) => SecondScreen(
+                        themeMode: themeMode,
+                        onThemeModeChanged: onThemeModeChanged,
+                      ),
                     ),
                   );
                 },
@@ -89,22 +140,32 @@ class FirstScreen extends StatelessWidget {
 /// SECOND SCREEN (OPTIONS)
 /// =====================
 class SecondScreen extends StatelessWidget {
-  const SecondScreen({super.key});
+  const SecondScreen({
+    super.key,
+    required this.themeMode,
+    required this.onThemeModeChanged,
+  });
+
+  final ThemeMode themeMode;
+  final ValueChanged<ThemeMode> onThemeModeChanged;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Choose Mode"),
-        backgroundColor: const Color(0xFF6A5AE0),
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(title: const Text("Choose Mode")),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            customButton(context, "Settings", const ThirdScreen()),
+            customButton(
+              context,
+              "Settings",
+              ThirdScreen(
+                themeMode: themeMode,
+                onThemeModeChanged: onThemeModeChanged,
+              ),
+            ),
             const SizedBox(height: 20),
             customButton(context, "Sign Conversation", const HandDemo()),
           ],
