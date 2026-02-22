@@ -53,11 +53,11 @@ class FirstScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   foregroundColor: Color(0xFF6A5AE0),
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 18,
+                    horizontal: 150,
+                    vertical: 50,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(60),
                   ),
                   elevation: 10,
                 ),
@@ -71,7 +71,7 @@ class FirstScreen extends StatelessWidget {
                 },
                 child: const Text(
                   "Click Here to Start",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -102,7 +102,8 @@ class SecondScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             customButton(context, "Sign to Text", const HandDemo()),
-            const SizedBox(height: 20),
+            
+            const SizedBox(height: 70),
             customButton(context, "Text to Sign", const FourthScreen()),
           ],
         ),
@@ -115,10 +116,11 @@ class SecondScreen extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+
           backgroundColor: const Color(0xFF8E7CFF),
-          padding: const EdgeInsets.symmetric(vertical: 18),
+          padding: const EdgeInsets.all(80),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(80),
           ),
         ),
         onPressed: () {
@@ -129,7 +131,7 @@ class SecondScreen extends StatelessWidget {
         },
         child: Text(
           text,
-          style: const TextStyle(fontSize: 18, color: Colors.white),
+          style: const TextStyle(fontSize: 45, color: Colors.white),
         ),
       ),
     );
