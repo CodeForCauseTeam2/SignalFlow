@@ -7,10 +7,15 @@
 - Hernan Zapien
 - Kayla Mendoza
 
+To run our web browser you MUST be in the flutter_application_1 folder and use the command in the terminal "flutter run -d chrome"
+
 Tasks:
 
 Web/Brower Application (Kayla, Hernan,Emily):
-  - 
+  - Created a web brower
+  - User freindly buttons
+  - Includes settings button that can change to dark mode
+  - Back arrows to go to previous page
 
 Video Capture of Hand (Aolany & Keitaro): 
   - Using MediaPipe, we used their model to capture hands.
