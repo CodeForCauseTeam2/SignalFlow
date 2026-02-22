@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MainApp());
+  
 }
 
 class MainApp extends StatelessWidget {
@@ -35,24 +36,32 @@ class FirstScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SecondScreen()),
-                );
-              },
-              child: const Text('Sign to Text'),
+            SizedBox(
+              height: 400,
+              width: 600,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SecondScreen()),
+                  );
+                },
+                child: const Text('Sign to Text'),
+              ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ThirdScreen()),
-                );
-              },
-              child: const Text('Text to Sign'),
+            SizedBox(
+              height: 400,
+              width: 600,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ThirdScreen()),
+                  );
+                },
+                child: const Text('Text to Sign'),
+              ),
             ),
           ],
         ),
