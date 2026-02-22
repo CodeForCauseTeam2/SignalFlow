@@ -1,48 +1,28 @@
-class Widget {
-  const Widget();
-}
+import 'package:flutter/material.dart';
 
-class Key {
-  const Key();
-}
-
-class BuildContext {}
-
-abstract class StatelessWidget extends Widget {
-  const StatelessWidget({this.key});
-  final Key? key;
-  Widget build(BuildContext context) => throw UnimplementedError();
-}
-
-class Scaffold extends Widget {
-  final AppBar? appBar;
-  final Widget? body;
-  const Scaffold({this.appBar, this.body});
-}
-
-class AppBar extends Widget {
-  final Widget? title;
-  const AppBar({this.title});
-}
-
-class Center extends Widget {
-  final Widget? child;
-  const Center({this.child});
-}
-
-class Text extends Widget {
-  final String data;
-  const Text(this.data);
-}
-
-class ThirdScreen extends StatelessWidget {
+class ThirdScreen extends StatefulWidget {
   const ThirdScreen({super.key});
+
+  @override
+  State<ThirdScreen> createState() => _ThirdScreenState();
+}
+
+class _ThirdScreenState extends State<ThirdScreen> {
+  bool darkMode = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Text to Sign')),
-      body: const Center(child: Text('Starting typing to translate text to sign language...')),
+      appBar: AppBar(title: const Text("Settings")),
+      body: SwitchListTile(
+        title: const Text("Dark Mode"),
+        value: darkMode,
+        onChanged: (value) {
+          setState(() {
+            darkMode = value;
+          });
+        },
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'third_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -143,17 +144,17 @@ class SecondScreen extends StatelessWidget {
 
 /// =====================
 /// THIRD SCREEN (Settings page)
-/// =====================
-class ThirdScreen extends StatelessWidget {
-  const ThirdScreen({super.key});
+// /// =====================
+// class ThirdScreen extends StatelessWidget {
+//   const ThirdScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("Settings", style: TextStyle(fontSize: 24))),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//       body: Center(child: Text("Settings", style: TextStyle(fontSize: 24))),
+//     );
+//   }
+// }
 
 /// =====================
 /// FOURTH SCREEN (previous conversations)

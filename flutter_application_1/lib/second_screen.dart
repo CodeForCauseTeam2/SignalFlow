@@ -1,45 +1,7 @@
-// Fallback stubs used when 'package:flutter/material.dart' is not available
-// Replace this file with the normal import when running in a Flutter project:
-// import 'package:flutter/material.dart';
-
-// Minimal stub types so this file can be analyzed/compiled outside a Flutter SDK.
-// These are intentionally tiny and should NOT be used in a real Flutter build.
-class Widget {
-  const Widget();
-}
-
-class Key {
-  const Key();
-}
-
-class BuildContext {}
-
-abstract class StatelessWidget extends Widget {
-  const StatelessWidget({this.key});
-  final Key? key;
-  Widget build(BuildContext context) => throw UnimplementedError();
-}
-
-class Scaffold extends Widget {
-  final AppBar? appBar;
-  final Widget? body;
-  const Scaffold({this.appBar, this.body});
-}
-
-class AppBar extends Widget {
-  final Widget? title;
-  const AppBar({this.title});
-}
-
-class Center extends Widget {
-  final Widget? child;
-  const Center({this.child});
-}
-
-class Text extends Widget {
-  final String data;
-  const Text(this.data);
-}
+import 'package:flutter/material.dart';
+import 'third_screen.dart';
+import 'second_screen.dart'; // if you have it
+import 'fourth_screen.dart'; // if you have it
 
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
@@ -47,8 +9,52 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign to Speech')),
-      body: const Center(child: Text('Translating sign language to text...')),
+      appBar: AppBar(title: const Text("Menu")),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildMenuButton(
+              context,
+              "Settings",
+              Icons.settings,
+              const ThirdScreen(),
+            ),
+            const SizedBox(height: 20),
+            buildMenuButton(
+              context,
+              "Previous Conversations",
+              Icons.history,
+              const FourthScreen(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildMenuButton(
+    BuildContext context,
+    String text,
+    IconData icon,
+    Widget screen,
+  ) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton.icon(
+        icon: Icon(icon),
+        label: Text(text),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
+        },
+      ),
     );
   }
 }

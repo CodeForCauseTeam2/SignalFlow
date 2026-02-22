@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'third_screen.dart';
 
 //main parent of the app
 void main() {
@@ -40,8 +41,10 @@ class FirstScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ElevatedButton(
+              // this button is the one that will take us to the second screen!
               onPressed: () {
                 Navigator.push(
+                  //Second screen navigation:
                   context,
                   MaterialPageRoute(builder: (context) => const SecondScreen()),
                 );
@@ -52,6 +55,7 @@ class FirstScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
+                  //Third screen navigation:
                   context,
                   MaterialPageRoute(builder: (context) => const ThirdScreen()),
                 );
@@ -65,6 +69,7 @@ class FirstScreen extends StatelessWidget {
   }
 }
 
+// Functionaly of second and third screen is not yet implemented, but we can navigate to them and see the text on the screen.
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
 
