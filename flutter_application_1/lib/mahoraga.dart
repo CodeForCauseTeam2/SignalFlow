@@ -15,6 +15,7 @@ class MainApp extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 33, 103, 243),
           brightness: Brightness.dark,
         ),
+        //determines colors tones
         textTheme: const TextTheme(
           displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
         ),
@@ -42,7 +43,7 @@ class FirstScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const SecondScreen()),
                 );
               },
-              child: const Text('Sign to Text'),
+              child: const Text('Settings'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -52,7 +53,7 @@ class FirstScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ThirdScreen()),
                 );
               },
-              child: const Text('Text to Sign'),
+              child: const Text('Previous Conversations'),
             ),
           ],
         ),
@@ -67,8 +68,8 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign to Text')),
-      body: const Center(child: Text('Start signing to translate sign language to text...')),
+      appBar: AppBar(title: const Text('Settings')),
+      body: const Center(child: Text('Modify features and settings here...')),
     );
   }
 }
@@ -79,8 +80,10 @@ class ThirdScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Text to Sign')),
-      body: const Center(child: Text('Starting typing to translate text to sign language...')),
+      appBar: AppBar(title: const Text('Previous Conversations')),
+      body: const Center(
+        child: Text('Starting typing to translate text to sign language...'),
+      ),
     );
   }
 }

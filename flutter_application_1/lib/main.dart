@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
 }
 
 /// =====================
-/// FIRST SCREEN (WELCOME)
+/// FIRST SCREEN (Our welcome )
 /// =====================
 class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
@@ -39,7 +39,7 @@ class FirstScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "Welcome to\nSignFlow",
+                "Welcome to\nSignFlow", // create teh style below
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 40,
@@ -47,6 +47,7 @@ class FirstScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
+
               const SizedBox(height: 60),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -101,9 +102,13 @@ class SecondScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            customButton(context, "Sign to Text", const ThirdScreen()),
+            customButton(context, "Settings", const ThirdScreen()),
             const SizedBox(height: 20),
-            customButton(context, "Text to Sign", const FourthScreen()),
+            customButton(
+              context,
+              "Previous Conversations",
+              const FourthScreen(),
+            ),
           ],
         ),
       ),
@@ -137,7 +142,7 @@ class SecondScreen extends StatelessWidget {
 }
 
 /// =====================
-/// THIRD SCREEN
+/// THIRD SCREEN (Settings page)
 /// =====================
 class ThirdScreen extends StatelessWidget {
   const ThirdScreen({super.key});
@@ -145,15 +150,13 @@ class ThirdScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text("Sign to Text Screen", style: TextStyle(fontSize: 24)),
-      ),
+      body: Center(child: Text("Settings", style: TextStyle(fontSize: 24))),
     );
   }
 }
 
 /// =====================
-/// FOURTH SCREEN
+/// FOURTH SCREEN (previous conversations)
 /// =====================
 class FourthScreen extends StatelessWidget {
   const FourthScreen({super.key});
